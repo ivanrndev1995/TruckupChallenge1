@@ -14,7 +14,13 @@
 ## 3. Detail on how to run the application
 
 ### 1. Make sure you have completed the React Native - Environment Setup instructions.
-### 2. Start the Metro Server.
+### 2. Install dependencies.
+```bash
+
+yarn install && cd ios && pod install && cd ..
+
+```
+### 3. Start the Metro Server.
 ```bash
 # using npm
 npm start
@@ -22,7 +28,7 @@ npm start
 # OR using Yarn
 yarn start
 ```
-### 3. Start Application.
+### 4. Start Application.
 ### For Android
 
 ```bash
