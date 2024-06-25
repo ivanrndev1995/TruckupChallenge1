@@ -16,6 +16,7 @@ import {
 interface CustomButtonI {
   value: string;
   onPress: () => void;
+  onPressIn: () => void;
   disable: boolean;
   isLoading: boolean;
 }
@@ -24,14 +25,16 @@ export const CustomButton = ({
   onPress,
   disable,
   isLoading,
+  onPressIn,
 }: CustomButtonI) => {
   const wrapperStyle = disable ? styles.wrapperDisable : styles.wrapperActive;
   const textStyle = disable ? styles.textDisable : styles.textActive;
   return (
     <TouchableOpacity
       style={[styles.wrapper, wrapperStyle]}
-      onPressIn={onPress}
-      disabled={disable}>
+      onPress={onPress}
+      onPressIn={onPressIn}
+      disabled={disable || isLoading}>
       {isLoading ? (
         <ActivityIndicator size="large" color={colors[MainColorName.GREY]} />
       ) : (

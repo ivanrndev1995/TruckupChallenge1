@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {colors, MainColorName} from '../../../../constants/color.ts';
 import {BottomSheetModal, BottomSheetView} from '@gorhom/bottom-sheet';
@@ -40,7 +40,7 @@ export const BottomModal = ({
       }
       bottomSheetModalRef.current?.present();
     }
-  }, [day]);
+  }, [day]); // eslint-disable-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (indexEnd <= indexStart) {
       setIsError(true);
@@ -54,9 +54,10 @@ export const BottomModal = ({
   const onClose = () => {
     bottomSheetModalRef.current?.close();
   };
-
-  const onPress = () => {
+  const onPressIn = () => {
     setIsLoading(true);
+  };
+  const onPress = useCallback(() => {
     if (filteredValue.length === 0) {
       setMainState([
         ...mainState,
@@ -71,8 +72,8 @@ export const BottomModal = ({
     setTimeout(() => {
       setIsLoading(false);
       bottomSheetModalRef.current?.close();
-    }, 150);
-  };
+    }, 300);
+  }, [indexEnd, indexStart, day]); // eslint-disable-line react-hooks/exhaustive-deps
   return (
     <View style={styles.wrapper}>
       <View style={styles.container}>
@@ -111,6 +112,7 @@ export const BottomModal = ({
             </View>
             <CustomButton
               onPress={onPress}
+              onPressIn={onPressIn}
               value={'Set time'}
               disable={isError}
               isLoading={isLoading}
